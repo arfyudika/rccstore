@@ -2622,7 +2622,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               break
        case 'amv':           
               reply(mess.wait)
-              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccbot/master/src/amv.txt')
+              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.txt')
               .then(async (body) => {
               amv = body.split('\n')
               amv = amv[Math.floor(Math.random() * amv.length)]
@@ -2635,7 +2635,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               break
        case 'randomvn':
               reply(mess.wait)
-              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccbot/master/src/randomvn.txt')
+              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/randomvn.txt')
               .then(async (body) => {
               amv = body.split('\n')
               amv = amv[Math.floor(Math.random() * amv.length)]
@@ -2647,7 +2647,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
               break
        case 'araara':
-       		ara = fs.readFileSync('./src/araara.mp3')
+        	   ara = fs.readFileSync('./src/araara.mp3')
 			   dha.sendMessage(from, ara, MessageType.audio, {quoted: mek, mimetype: 'audio/mp4', ptt:true} )
 			break
        case 'ribut':
