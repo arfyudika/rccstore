@@ -2084,7 +2084,7 @@ case 'tiktok':
              ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/ssweb?apikey=${setting.lolkey}&url=${ini_link}`)
              await dha.sendMessage(from, ini_buffer, image, { quoted: mek })
              break
-       case 'nhentaipdf':
+       case 'nhentaipdf': case 'nhenpdf':
              if (args.length == 0) return reply(`Usage: ${prefix + command} query\nExample: ${prefix + command} 317986`)
              try {
              reply(mess.wait)
@@ -2329,8 +2329,8 @@ break
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
-       case 'wallnime':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey={setting.lolkey}`)
+              case 'wallnime': case 'wpnime':
+              hai = await getBuffer(`https://api.lolhuman.xyz/api/random2/wallpaper?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
@@ -2468,17 +2468,8 @@ break
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
-       case 'ppcouple':
+       case 'ppcouple': case 'ppcp':
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/ppcouple?apikey=${setting.lolkey}`)
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
-              dha.relayWAMessage(prep)
-break
-       case 'wallnime':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/wallnime?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
@@ -2745,6 +2736,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
+              break
         case 'nulis':
         case 'tulis':
                if (args.length < 1) return reply('Yang mau di tulis apaan?')
