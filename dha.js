@@ -2725,7 +2725,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`,
               contentText:`Continue to the next video︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from, ini_buffer, video,{buttonsMessage},{quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4" })})
+              prep = await dha.prepareMessageFromContent(from, ini_buffer, video,{buttonsMessage},{quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4" })
               dha.relayWAMessage(prep)
               break
         case 'nulis':
