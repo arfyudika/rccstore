@@ -2390,9 +2390,8 @@ break
                break
             case 'waifu':
               hai = await fetchJson(`https://api.waifu.pics/nsfw/waifu`)
-              inifile = sendMediaURL(from, hai.url, )
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, inifile, "imageMessage", { thumbnail: hai, })).imageMessage
+              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
               buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
