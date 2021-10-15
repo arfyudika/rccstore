@@ -2473,7 +2473,7 @@ break
               let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(from, fs.readFileSync(`./${sender}.jpeg`), "imageMessage", { thumbnail: hai, })).imageMessage
+              imageMsg = (await dha.prepareMessageMedia(from, fs.readFileSync(`./${sender}.jpeg`), "imageMessage", { thumbnail: wipu, })).imageMessage
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
