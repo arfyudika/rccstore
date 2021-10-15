@@ -2472,7 +2472,7 @@ break
               let wipu = (await axios.get(`https://raw.githubusercontent.com/Arya-was/endak-tau/main/${command}.json`)).data
               let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}
+              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = ( await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Continue to the next image`,buttons,headerType:4}
@@ -2720,12 +2720,12 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
+              get_result = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${apikey}`)
+              ini_buffer = await getBuffer(get_result.result)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              videoMsg = (await dha.prepareMessageMedia(hai, "videoMessage", { thumbnail: hai, })).videoMessage
-              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage: videoMsg,
-              contentText:`Continue to the next image︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`,
+              contentText:`Continue to the next video︎`,buttons,headerType:4}
+              prep = await dha.prepareMessageFromContent(from, ini_buffer, video,{buttonsMessage},{quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4" })})
               dha.relayWAMessage(prep)
               break
         case 'nulis':
