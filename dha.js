@@ -2724,7 +2724,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               ini_buffer = await getBuffer(get_result.result)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage, videoMsg
-              contentText:`Continue to the next video︎`,buttons,headerType:4}
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from, ini_buffer, video,{buttonsMessage},{quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4" })
               dha.relayWAMessage(prep)
               break
