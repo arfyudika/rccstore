@@ -2738,7 +2738,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-               get_result = await getBuffer(`https://itsmevall.herokuapp.com/api/asupan?apikey=${valkey}`)
+               get_result = await getBuffer(`https://itsmevall.herokuapp.com/api/asupan?apikey=rivalgans`)
                kodo = `Random Asupan︎`
                sendButVideo(from, kodo, `Next Untuk Melanjutkan`, get_result, [                      
           {
