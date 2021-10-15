@@ -2751,7 +2751,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
 //------------------< Level >-------------------
-      case 'level': 
+      case 'level': case 'lvl':
               if (!isGroup) return reply(mess.only.group)
               if (!isLevelingOn) return await reply('Fitur leveling belum diaktifkan!')
               let userLevel = level.getLevelingLevel(sender, _level)
@@ -2768,7 +2768,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               dha.sendMessage(from, buffer, image, { caption: teks, quoted: mek})
               break
        case 'leaderboard': //Cek Leaderboard
-       case 'leaderboards':
+       case 'leaderboards': case 'lb':
               if (!isGroup) return reply(mess.only.group)
               if (!isLevelingOn) return await reply('Fitur leveling belum diaktifkan!') 
               const resp = _level
@@ -3292,7 +3292,7 @@ fetchJson(`https://api.zeks.xyz/api/spamcall?apikey=chika-key&no=${args[1]}`)
 }
 break   
 //------------------<18+ Menu>-----------------------   
-       case 'randombokep':
+       case 'randombokep': case 'bkp':
     fetchJson(`https://pastebin.com/raw/k82VJzeP`).then((data) => {
     var bokepp = JSON.parse(JSON.stringify(data))
     var bokep2 =  bokepp[Math.floor(Math.random() * bokepp.length)]
@@ -3322,7 +3322,7 @@ break
                     dha.sendMessage(from, thumbnail, image, { quoted: mek, caption: ini_txt })
                     reply(ini_txt)
                     break
-        case 'xnxxsearch':
+        case 'xnxxsearch': case 'xnsearch':
                     if (args.length == 0) return reply(`Example: ${prefix + command} Japanese`)
                     query = args.join(" ")
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/xnxxsearch?apikey=rccstore&query=${query}`)
@@ -3338,7 +3338,7 @@ break
                     }
                     reply(ini_txt)
                     break 
-        case 'xhamstersearch':
+        case 'xhamstersearch': case 'xhsearch':
                     if (args.length == 0) return reply(`Example: ${prefix + command} Japanese`)
                     query = args.join(" ")
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/xhamstersearch?apikey=rccstore&query=${query}`)
@@ -3354,7 +3354,7 @@ break
                     }
                     reply(ini_txt)
                     break
-        case 'pornhubsearch':
+        case 'pornhubsearch': case 'phsearch':
                     if (args.length == 0) return reply(`Example: ${prefix + command} Japanese`)
                     query = args.join(" ")
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/pornhubsearch?apikey=rccstore&query=${query}`)
