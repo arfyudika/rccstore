@@ -2738,18 +2738,13 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-               get_result = await getBuffer(`https://itsmevall.herokuapp.com/api/asupan?apikey=rivalgans`)
-               kodo = `Random Asupan︎`
-               sendButVideo(from, kodo, `Next Untuk Melanjutkan`, get_result, [                      
-          {
-            buttonId: `${prefix+command}`,
-            buttonText: {
-              displayText: `⏩ Next︎`,
-            },
-            type: 1,
-          },
-        ]);
-              break         
+              hai = await getBuffer(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
+              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
+              videoMsg = (await dha.prepareMessageMedia(hai, "videoMessage", { thumbnail: hai, })).videoMessage
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage: videoMsg,
+              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+              dha.relayWAMessage(prep)
         case 'nulis':
         case 'tulis':
                if (args.length < 1) return reply('Yang mau di tulis apaan?')
