@@ -2459,16 +2459,6 @@ break
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
-       case 'cosplay':
-              let hai = (await axios.get(`https://raw.githubusercontent.com/Arya-was/endak-tau/main/${command}.json`)).data
-              let hai = hai[Math.floor(Math.random() * (hai.length))]
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
-              dha.relayWAMessage(prep)
-break
        case 'ppcouple': case 'ppcp':
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/ppcouple?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
