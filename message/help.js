@@ -113,7 +113,7 @@ exports.wibuMenu = (prefix) => {
 ▢️ ${prefix}lolivideo
 ▢ ${prefix}husbu
 ▢️ ${prefix}waifu
-▢️ ${prefix}mom
+▢️ ${prefix}milf
 ▢ ${prefix}neko
 ▢️ ${prefix}kanna
 ▢ ${prefix}sagiri
