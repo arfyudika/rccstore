@@ -4253,15 +4253,15 @@ break
               dha.sendMessage(from, '*Pertanyaan :* '+kapankah+'\n*Jawaban :* '+ koh, text, { quoted: mek })
               break
           case 'bucin':
-              anu = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`), {method: 'get'})
-              kata = anu.result
+	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`, {method: 'get'})
+				kata = anu.result
               buttons = [{buttonId: `${prefix}bucin`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
               buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
               dha.relayWAMessage(prep)
-              break
+		   	break
           case 'randomnama':
-              anu = await fetchJson(`https://api.lolhuman.xyz/api/random/nama?apikey=${setting.lolkey}`), {method: 'get'})
+              anu = await fetchJson(`https://api.lolhuman.xyz/api/random/nama?apikey=${setting.lolkey}`, {method: 'get'})
 		      kata = anu.result
               buttons = [{buttonId: `${prefix}randomnama`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
               buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
