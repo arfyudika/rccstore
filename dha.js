@@ -2297,7 +2297,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/neko?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2306,7 +2306,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/kanna?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2315,7 +2315,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/sagiri?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2324,7 +2324,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/megumin?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2333,15 +2333,19 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break    
        case 'hentai':
-              getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/hentai?apikey=${setting.lolkey}`).then((gambar) => {
-              dha.sendMessage(from, gambar, image, { quoted: mek })
-})
+              hai = await fetchJson(`https://api.waifu.pics/nsfw/waifu`)
+              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
+              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+              dha.relayWAMessage(prep)
 break
        case 'storyanime':
               reply(mess.wait)
@@ -2407,10 +2411,10 @@ break
                dha.sendMessage(from, buff, image, {quoted: mek, caption: ot})
                break
             case 'waifu':
-              hai = await fetchJson(`https://api.waifu.pics/nsfw/waifu`)
+              hai = await fetchJson(`https://api.waifu.pics/sfw/waifu`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2432,7 +2436,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/loli?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:`${week}, ${weton}, ${jam}\n${date}`, imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2441,16 +2445,16 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/husbu?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
-       case 'milf':
+       case 'mom':
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/milf?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2459,7 +2463,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/cosplay?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2468,7 +2472,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/ppcouple?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2477,7 +2481,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/wallnime?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2488,7 +2492,7 @@ break
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
 		      buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `➡️Next`},type:1},{buttonId:`${prefix}nhentaibot`,buttonText:{displayText:'NHENTAI BOT'},type:1}]
               imageMsg = ( await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi ya', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
               contentText:`klik Next untuk ke gambar selanjut nya`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
@@ -2565,8 +2569,8 @@ Source : ${anu.result.source}
               if (!q) return reply('Linknya?')
               buttons = [{buttonId: `${prefix}play2 ${q}`,buttonText:{displayText: `🎥 Video`},type:1},{buttonId:`${prefix}playy ${q}`,buttonText:{displayText:'🎵 Mp3'},type:1}]
               imageMsg = (await dha.prepareMessageMedia(fs.readFileSync(`./media/ganteng.jpg`), 'imageMessage', {thumbnail: fs.readFileSync(`./media/ganteng.jpg`)})).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi ya', imageMessage: imageMsg,
-              contentText:`Pilih media yang akan di download`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Media yang akan di download`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
               break
@@ -4255,7 +4259,7 @@ break
           case 'bucin':
 	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`, {method: 'get'})
 				kata = anu.result
-              buttons = [{buttonId: `${prefix}bucin`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttons = [{buttonId: `${prefix}bucin`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}funmenu`,buttonText:{displayText: 'Back Menu'},type:1}]
               buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
               dha.relayWAMessage(prep)
@@ -4263,7 +4267,7 @@ break
           case 'randomnama':
               anu = await fetchJson(`https://api.lolhuman.xyz/api/random/nama?apikey=${setting.lolkey}`, {method: 'get'})
 		      kata = anu.result
-              buttons = [{buttonId: `${prefix}randomnama`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttons = [{buttonId: `${prefix}randomnama`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}funmenu`,buttonText:{displayText: 'Back Menu'},type:1}]
               buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
               dha.relayWAMessage(prep)
@@ -4277,7 +4281,7 @@ break
        case 'pantun':
 	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/pantun?apikey=${setting.lolkey}`, {method: 'get'})
 				kata = anu.result
-              buttons = [{buttonId: `${prefix}pantun`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttons = [{buttonId: `${prefix}pantun`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}funmenu`,buttonText:{displayText: 'Back Menu'},type:1}]
               buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
               dha.relayWAMessage(prep)
