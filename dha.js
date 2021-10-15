@@ -4253,7 +4253,7 @@ break
               dha.sendMessage(from, '*Pertanyaan :* '+kapankah+'\n*Jawaban :* '+ koh, text, { quoted: mek })
               break
           case 'bucin':
-              get_result = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`), {method: 'get'})
+              anu = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`), {method: 'get'})
               kata = anu.result
               buttons = [{buttonId: `${prefix}bucin`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
               buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
