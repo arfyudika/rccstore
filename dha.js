@@ -116,6 +116,11 @@ let _scommand = JSON.parse(fs.readFileSync('./database/bot/scommand.json'))
     let weton = ["Pahing", "Pon", "Wage", "Kliwon", "Legi"][
       Math.floor((d * 1 + gmt) / 84600000) % 5
      ];
+     let date = d.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
     let week = d.toLocaleDateString(locale, { weekday: "long" });
     let calender = d.toLocaleDateString(locale, {
       day: "numeric",
