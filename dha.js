@@ -2720,10 +2720,10 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-              get_result = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
+              get_result = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${apikey}`)
               ini_buffer = await getBuffer(get_result.result)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`,
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage, videoMsg
               contentText:`Continue to the next video︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from, ini_buffer, video,{buttonsMessage},{quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4" })
               dha.relayWAMessage(prep)
