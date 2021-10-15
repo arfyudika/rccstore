@@ -2720,7 +2720,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-              get_result = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${apikey}`)
+              get_result = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
               ini_buffer = await getBuffer(get_result.result)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`,
