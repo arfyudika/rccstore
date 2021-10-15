@@ -91,6 +91,7 @@ datapb = 'ID Game-Item'
 datags = 'ID Game-Item'
 datahdi = 'ID Game-Item'
 datasosis = 'Id Game-Item'
+nmbot = 'RCC BOT'
 fake = '𝐀𝐇𝐌𝐀𝐃 𝐑𝐀𝐅𝐋𝐈 𝐘𝐔𝐃𝐈𝐊𝐀'//GANTI NAMA KAMU BEP
 ban =[]
 
@@ -2716,7 +2717,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-               get_result = await getBuffer(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
+               get_result = await getBuffer(`https://itsmevall.herokuapp.com/api/asupan?apikey=${valkey}`)
                kodo = `Random Asupan︎`
                sendButVideo(from, kodo, `Next Untuk Melanjutkan`, get_result, [                      
           {
@@ -4249,9 +4250,13 @@ break
               dha.sendMessage(from, truteh, image, { caption: '*Truth*\n\n'+ ttrth, quoted: mek })
               break
        case 'pantun':
-             get_result = await fetchJson(`https://api.lolhuman.xyz/api/random/pantun?apikey=${setting.lolkey}`)
-             reply(get_result.result)
-             break
+	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/pantun?apikey=${setting.lolkey}`, {method: 'get'})
+				kata = anu.result
+              buttons = [{buttonId: `${prefix}pantun`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}command`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
+              dha.relayWAMessage(prep)
+			break
        case 'dare':
               const dare =['Kirim pesan ke mantan kamu dan bilang "aku masih suka sama kamu','telfon crush/pacar sekarang dan ss ke pemain','pap ke salah satu anggota grup','Bilang "KAMU CANTIK BANGET NGGAK BOHONG" ke cowo','ss recent call whatsapp','drop emot "??💨" setiap ngetik di gc/pc selama 1 hari','kirim voice note bilang can i call u baby?','drop kutipan lagu/quote, terus tag member yang cocok buat kutipan itu','pake foto sule sampe 3 hari','ketik pake bahasa daerah 24 jam','ganti nama menjadi "gue anak lucinta luna" selama 5 jam','chat ke kontak wa urutan sesuai %batre kamu, terus bilang ke dia "i lucky to hv you','prank chat mantan dan bilang " i love u, pgn balikan','record voice baca surah al-kautsar','bilang "i hv crush on you, mau jadi pacarku gak?" ke lawan jenis yang terakhir bgt kamu chat (serah di wa/tele), tunggu dia bales, kalo udah ss drop ke sini','sebutkan tipe pacar mu!','snap/post foto pacar/crush','teriak gajelas lalu kirim pake vn kesini','pap mukamu lalu kirim ke salah satu temanmu','kirim fotomu dengan caption, aku anak pungut','teriak pake kata kasar sambil vn trus kirim kesini','teriak " anjimm gabutt anjimmm " di depan rumah mu','ganti nama jadi " BOWO " selama 24 jam','Pura pura kerasukan, contoh : kerasukan maung, kerasukan belalang, kerasukan kulkas, dll']
               const der = dare[Math.floor(Math.random() * dare.length)]
