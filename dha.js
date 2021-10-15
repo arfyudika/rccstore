@@ -109,6 +109,20 @@ let mute = JSON.parse(fs.readFileSync('./database/group/mute.json'));
 let _update = JSON.parse(fs.readFileSync('./database/bot/update.json'))
 let sewa = JSON.parse(fs.readFileSync('./database/group/sewa.json'));
 let _scommand = JSON.parse(fs.readFileSync('./database/bot/scommand.json'))
+let weton = ["Pahing", "Pon", "Wage", "Kliwon", "Legi"][
+      Math.floor((d * 1 + gmt) / 84600000) % 5
+    ];
+    let date = d.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    let week = d.toLocaleDateString(locale, { weekday: "long" });
+    let waktu = d.toLocaleDateString(locale, {
+      hour: "numeric",
+      minute: "numeric",
+      second: "numeric",
+    });
 
 // GAME
 let tebakanime = JSON.parse(fs.readFileSync('./database/tebakanime.json'))
@@ -2414,7 +2428,7 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/loli?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
+              buttonsMessage = {footerText:`${week}, ${weton}, ${waktu}\n${date}`, imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
