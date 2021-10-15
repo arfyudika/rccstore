@@ -831,6 +831,17 @@ function banChat() {
                prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{})
                dha.relayWAMessage(prep)
                break 
+///Button Text
+const sendButMessage = (id, text1, desc1, but = [], options = {}) => {
+const buttonMessage = {
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 1
+}
+dha.sendMessage(id, buttonMessage, MessageType.buttonsMessage, options)
+}
+///Button Image
 const sendButImage = async(id, text1, desc1, gam1, but = [], options = {}) => {
 kma = gam1
 mhan = await dha.prepareMessage(from, kma, image)
@@ -840,6 +851,32 @@ contentText: text1,
 footerText: desc1,
 buttons: but,
 headerType: 4
+}
+dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+///Button Video
+const sendButVideo = async(id, text1, desc1, vid1, but = [], options = {}) => {
+kma = vid1
+mhan = await dha.prepareMessage(from, kma, video)
+const buttonMessages = {
+videoMessage: mhan.message.videoMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 5
+}
+dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+///Button Location
+const sendButLocation = async (id, text1, desc1, gam1, but = [], options = {}) => {
+kma = gam1
+mhan = await dha.prepareMessage(from, kma, location)
+const buttonMessages = {
+locationMessage: mhan.message.locationMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 6
 }
 dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 }
@@ -2283,13 +2320,9 @@ break
               dha.relayWAMessage(prep)
 break    
        case 'hentai':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/hentai?apikey={setting.lolkey}`)
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
-              dha.relayWAMessage(prep)
+              getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/hentai?apikey=${setting.lolkey}`).then((gambar) => {
+              dha.sendMessage(from, gambar, image, { quoted: mek })
+})
 break
        case 'storyanime':
               reply(mess.wait)
@@ -2355,9 +2388,10 @@ break
                dha.sendMessage(from, buff, image, {quoted: mek, caption: ot})
                break
             case 'waifu':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/waifu?apikey={setting.lolkey}`)
+              hai = await fetchJson(`https://api.waifu.pics/nsfw/waifu`)
+              inifile = sendMediaURL(from, hai.url, )
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
+              imageMsg = (await dha.prepareMessageMedia(hai, inifile, "imageMessage", { thumbnail: hai, })).imageMessage
               buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
               contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
@@ -2684,7 +2718,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
          case 'asupan':
                get_result = await getBuffer(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
                kodo = `Random Asupan︎`
-               sendMediaURL(from, kodo, `Next Untuk Melanjutkan`, get_result, [                      
+               sendButVideo(from, kodo, `Next Untuk Melanjutkan`, get_result, [                      
           {
             buttonId: `${prefix+command}`,
             buttonText: {
