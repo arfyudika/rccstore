@@ -2663,7 +2663,6 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               let emv = aimv[Math.floor(Math.random() * (aimv.length))]
               mp4 = await getBuffer(emv)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              contentText:`Continue to the next image`,buttons,headerType:4}
               dha.sendMessage(from, mp4, video, {mimetype: 'video/mp4', quoted: mek, caption: mess.success})
               dha.relayWAMessage(prep)
               fs.unlinkSync(aimv)
