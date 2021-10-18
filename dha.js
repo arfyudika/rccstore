@@ -2666,9 +2666,6 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               dha.sendMessage(from, mp4, video, {mimetype: 'video/mp4', quoted: mek, caption: mess.success})
               dha.relayWAMessage(prep)
               fs.unlinkSync(aimv)
-               } else {
-               reply(mess.wrongFormat)
-}
                break
        case 'randomvn':
               reply(mess.wait)
