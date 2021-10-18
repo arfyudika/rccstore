@@ -2659,17 +2659,16 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               dha.sendMessage(from, ass2, audio,{mimetype: 'audio/mp4', ptt:true, quoted: mek})
               break
        case 'amv':           
-              reply(mess.wait)
-              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.txt')
-              .then(async (body) => {
-              amv = body.split('\n')
-              amv = amv[Math.floor(Math.random() * amv.length)]
-              sendMediaURL(from, amv)
-})
-             .catch(async (err) => {
-              console.error(err)
-              reply(`${err}`)
-})
+              let wipu = (await axios.get(`https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.json`)).data
+              let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
+              fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
+              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
+              videoMsg = ( await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'videoMessage', {thumbnail: Buffer.alloc(0)})).message.videoMessage
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage: videoMsg,
+              contentText:`Continue to the next image`,buttons,headerType:4}
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+              dha.relayWAMessage(prep)
+              fs.unlinkSync(`./${sender}.jpeg`)
               break
        case 'randomvn':
               reply(mess.wait)
