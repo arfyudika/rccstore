@@ -2661,15 +2661,16 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
        case 'amv':           
               let aimv = (await axios.get(`https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.json`)).data
               let emv = aimv[Math.floor(Math.random() * (aimv.length))]
-              fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(emv))
+              mp4 = await getBuffer(emv)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              videoMsg = ( await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'videoMessage', {thumbnail: Buffer.alloc(0)})).message.videoMessage
-              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage: videoMsg,
               contentText:`Continue to the next image`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+              dha.sendMessage(from, mp4, video, {mimetype: 'video/mp4', quoted: mek, caption: mess.success})
               dha.relayWAMessage(prep)
-              fs.unlinkSync(`./${sender}.jpeg`)
-              break
+              fs.unlinkSync(aimv)
+               } else {
+               reply(mess.wrongFormat)
+}
+               break
        case 'randomvn':
               reply(mess.wait)
               amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/randomvn.txt')
