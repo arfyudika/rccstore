@@ -2659,17 +2659,13 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               dha.sendMessage(from, ass2, audio,{mimetype: 'audio/mp4', ptt:true, quoted: mek})
               break
        case 'amv':
-              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.txt')
+              let aimv = (await axios.get(`https://raw.githubusercontent.com/arfyudika/rccstore/master/src/${command}.json`)).data
+              let emv = aimv[Math.floor(Math.random() * (aimv.length))]
+              mp4 = await getBuffer(emv)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              .then(async (body) => {
-              amv = body.split('\n')
-              amv = amv[Math.floor(Math.random() * amv.length)]
-              sendMediaURL(from, amv)
-})
-             .catch(async (err) => {
-              console.error(err)
-              reply(`${err}`)
-})
+              dha.sendMessage(from, mp4, video, {mimetype: 'video/mp4', quoted: mek, caption: mess.success})
+              dha.relayWAMessage(prep)
+              fs.unlinkSync(aimv)
                break
        case 'randomvn':
               reply(mess.wait)
