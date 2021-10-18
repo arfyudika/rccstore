@@ -2659,9 +2659,9 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               dha.sendMessage(from, ass2, audio,{mimetype: 'audio/mp4', ptt:true, quoted: mek})
               break
        case 'amv':           
-              let wipu = (await axios.get(`https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.json`)).data
-              let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
-              fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
+              let aimv = (await axios.get(`https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.json`)).data
+              let emv = wipu[Math.floor(Math.random() * (aimv.length))]
+              fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(emv))
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               videoMsg = ( await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'videoMessage', {thumbnail: Buffer.alloc(0)})).message.videoMessage
               buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, videoMessage: videoMsg,
