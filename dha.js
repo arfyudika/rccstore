@@ -3180,7 +3180,7 @@ break
               fs.unlinkSync(media)
               if (err) return reply('Gagal, pada saat mengkonversi sticker ke gambar')
               buffer = fs.readFileSync(ran)
-              dha.sendMessage(from, buffer, image, {quoted: mek, caption: 'Nih'})
+              dha.sendMessage(from, buffer, image, {quoted: mek, caption: 'Selesai..'})
               fs.unlinkSync(ran)
 })
               break
@@ -4360,7 +4360,7 @@ break
                if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
                linkpp = await dha.getProfilePicture(from) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
                buffer = await getBuffer(linkpp)
-               dha.sendMessage(from, buffer, image, {caption: "Nih", quoted: mek })
+               dha.sendMessage(from, buffer, image, {caption: "Selesai..", quoted: mek })
                } else if (mek.message.extendedTextMessage.contextInfo.mentionedJid === null || mek.message.extendedTextMessage.contextInfo.mentionedJid === undefined) {
                mberr = mek.message.extendedTextMessage.contextInfo.participant
                linkpp = await dha.getProfilePicture(mberr) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
