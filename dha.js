@@ -4328,7 +4328,6 @@ break
           break
 						case 'ban':
 									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
-									if (dha.message.extendedTextMessage === undefined || dha.message.extendedTextMessage === null) {
 										ny = `${args[0].replace('@', '')}@s.whatsapp.net`
 										ban.push(ny)
 										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
@@ -4338,11 +4337,10 @@ break
 											ban.push(ny)
 											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
 											reply(`Nomor ${ny} telah dibanned!`)
-										}
+											}
 									break
 						case 'unban':
 									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
-									if (dha.message.extendedTextMessage === undefined || dha.message.extendedTextMessage === null) {
 										ah = `${args[0].replace("@","")}@s.whatsapp.net`
 										unb = ban.indexOf(ah)
 										ban.splice(unb, 1)
