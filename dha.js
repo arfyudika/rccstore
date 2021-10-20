@@ -93,7 +93,7 @@ datahdi = 'ID Game-Item'
 datasosis = 'Id Game-Item'
 nmbot = 'RCC BOT'
 fake = '𝐀𝐇𝐌𝐀𝐃 𝐑𝐀𝐅𝐋𝐈 𝐘𝐔𝐃𝐈𝐊𝐀'//GANTI NAMA KAMU BEP
-ban =[]
+ban = 'Maaf Kamu Sudah Di Banned!'
 
 // Database
 let register = JSON.parse(fs.readFileSync('./database/user/register.json'))
@@ -235,7 +235,7 @@ module.exports = dha = async (dha, mek) => {
 		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 		const isGroupAdmins = groupAdmins.includes(sender) || false
-		const isBanned = banned.includes(sender) || false
+	    const isBan = ban.includes(sender)
         const conts = mek.key.fromMe ? dha.user.jid : dha.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const pushname = mek.key.fromMe ? dha.user.name : conts.notify || conts.vname || conts.name || '-'
         const mentionByTag = type == "extendedTextMessage" && mek.message.extendedTextMessage.contextInfo != null ? mek.message.extendedTextMessage.contextInfo.mentionedJid : []
