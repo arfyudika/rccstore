@@ -4323,8 +4323,9 @@ break
 											},
 											type: 1,
 											}]);
-        	break
-       case 'jadian':{
+											}
+                                     	break
+       case 'jadian':
               jds = []
               jdii = groupMembers
               koss = groupMembers
@@ -4334,7 +4335,6 @@ break
               jds.push(akuu.jid)
               jds.push(diaa.jid)
               mentions(teks, jds, true)
-              }
               break
        case 'cantik':
               membr = []
