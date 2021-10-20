@@ -91,8 +91,9 @@ datapb = 'ID Game-Item'
 datags = 'ID Game-Item'
 datahdi = 'ID Game-Item'
 datasosis = 'Id Game-Item'
+nmbot = 'RCC BOT'
 fake = '𝐀𝐇𝐌𝐀𝐃 𝐑𝐀𝐅𝐋𝐈 𝐘𝐔𝐃𝐈𝐊𝐀'//GANTI NAMA KAMU BEP
-ban =[]
+ban = 'Maaf Kamu Sudah Di Banned!'
 
 // Database
 let register = JSON.parse(fs.readFileSync('./database/user/register.json'))
@@ -108,6 +109,24 @@ let mute = JSON.parse(fs.readFileSync('./database/group/mute.json'));
 let _update = JSON.parse(fs.readFileSync('./database/bot/update.json'))
 let sewa = JSON.parse(fs.readFileSync('./database/group/sewa.json'));
 let _scommand = JSON.parse(fs.readFileSync('./database/bot/scommand.json'))
+    const jam = moment.tz("Asia/Jakarta").format("HH:mm:ss");
+    let d = new Date();
+    let locale = "id";
+    let gmt = new Date(0).getTime() - new Date("1 Januari 2021").getTime();
+    let weton = ["Pahing", "Pon", "Wage", "Kliwon", "Legi"][
+      Math.floor((d * 1 + gmt) / 84600000) % 5
+     ];
+     let date = d.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    let week = d.toLocaleDateString(locale, { weekday: "long" });
+    let calender = d.toLocaleDateString(locale, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
 
 // GAME
 let tebakanime = JSON.parse(fs.readFileSync('./database/tebakanime.json'))
@@ -197,7 +216,7 @@ module.exports = dha = async (dha, mek) => {
 		const isCmd = body.startsWith(prefix) 
 		if (isCmd) cmdadd()
 		const totalhit = JSON.parse(fs.readFileSync('./database/totalcmd.json'))[0].totalcmd
-		const banned = JSON.parse(fs.readFileSync('./src/banned.json'))
+        const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
         const q = args.join(' ')
         const botNumber = dha.user.jid
         const ownerNumber = setting.ownerNumber
@@ -216,7 +235,7 @@ module.exports = dha = async (dha, mek) => {
 		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 		const isGroupAdmins = groupAdmins.includes(sender) || false
-		const isBanned = banned.includes(sender) || false
+	    const isBan = ban.includes(sender)
         const conts = mek.key.fromMe ? dha.user.jid : dha.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const pushname = mek.key.fromMe ? dha.user.name : conts.notify || conts.vname || conts.name || '-'
         const mentionByTag = type == "extendedTextMessage" && mek.message.extendedTextMessage.contextInfo != null ? mek.message.extendedTextMessage.contextInfo.mentionedJid : []
@@ -831,6 +850,17 @@ function banChat() {
                prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{})
                dha.relayWAMessage(prep)
                break 
+///Button Text
+const sendButMessage = (id, text1, desc1, but = [], options = {}) => {
+const buttonMessage = {
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 1
+}
+dha.sendMessage(id, buttonMessage, MessageType.buttonsMessage, options)
+}
+///Button Image
 const sendButImage = async(id, text1, desc1, gam1, but = [], options = {}) => {
 kma = gam1
 mhan = await dha.prepareMessage(from, kma, image)
@@ -840,6 +870,32 @@ contentText: text1,
 footerText: desc1,
 buttons: but,
 headerType: 4
+}
+dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+///Button Video
+const sendButVideo = async(id, text1, desc1, vid1, but = [], options = {}) => {
+kma = vid1
+mhan = await dha.prepareMessage(from, kma, video)
+const buttonMessages = {
+videoMessage: mhan.message.videoMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 5
+}
+dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
+}
+///Button Location
+const sendButLocation = async (id, text1, desc1, gam1, but = [], options = {}) => {
+kma = gam1
+mhan = await dha.prepareMessage(from, kma, location)
+const buttonMessages = {
+locationMessage: mhan.message.locationMessage,
+contentText: text1,
+footerText: desc1,
+buttons: but,
+headerType: 6
 }
 dha.sendMessage(id, buttonMessages, MessageType.buttonsMessage, options)
 }
@@ -2009,7 +2065,7 @@ case 'tiktok':
              ini_buffer = await getBuffer(`https://api.lolhuman.xyz/api/ssweb?apikey=${setting.lolkey}&url=${ini_link}`)
              await dha.sendMessage(from, ini_buffer, image, { quoted: mek })
              break
-       case 'nhentaipdf':
+       case 'nhentaipdf': case 'nhenpdf':
              if (args.length == 0) return reply(`Usage: ${prefix + command} query\nExample: ${prefix + command} 317986`)
              try {
              reply(mess.wait)
@@ -2222,8 +2278,8 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/neko?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
@@ -2231,8 +2287,8 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/kanna?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
@@ -2240,8 +2296,8 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/sagiri?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
@@ -2249,26 +2305,26 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/megumin?apikey={setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
-       case 'wallnime':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/${command}?apikey={setting.lolkey}`)
+              case 'wallnime': case 'wpnime':
+              hai = await getBuffer(`https://api.lolhuman.xyz/api/random2/wallpaper?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break    
        case 'hentai':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/hentai?apikey={setting.lolkey}`)
+              hai = await fetchJson(`https://api.waifu.pics/nsfw/waifu`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
@@ -2336,11 +2392,11 @@ break
                dha.sendMessage(from, buff, image, {quoted: mek, caption: ot})
                break
             case 'waifu':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/waifu?apikey={setting.lolkey}`)
+              hai = await fetchJson(`https://api.waifu.pics/sfw/waifu`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
@@ -2361,8 +2417,8 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/loli?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
               break
@@ -2370,55 +2426,37 @@ break
               hai = await getBuffer(`https://api.lolhuman.xyz/api/random/husbu?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
        case 'milf':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/milf?apikey=${setting.lolkey}`)
+              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/nsfw/biganimetiddies?apikey=${setting.lolkey}`)
               buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
+              dha.relayWAMessage(prep)
+break
+       case 'ppcouple': case 'ppcp':
+              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/ppcouple?apikey=${setting.lolkey}`)
+              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
+              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image︎`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
 break
        case 'cosplay':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/cosplay?apikey=${setting.lolkey}`)
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
-              dha.relayWAMessage(prep)
-break
-       case 'ppcouple':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/ppcouple?apikey=${setting.lolkey}`)
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
-              dha.relayWAMessage(prep)
-break
-       case 'wallnime':
-              hai = await getBuffer(`https://api.lolhuman.xyz/api/random/wallnime?apikey=${setting.lolkey}`)
-              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
-              imageMsg = (await dha.prepareMessageMedia(hai, "imageMessage", { thumbnail: hai, })).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi', imageMessage: imageMsg,
-              contentText:`Next untuk gambar selanjutnya︎`,buttons,headerType:4}
-              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
-              dha.relayWAMessage(prep)
-break
-       case 'wallml':
               let wipu = (await axios.get(`https://raw.githubusercontent.com/Arya-was/endak-tau/main/${command}.json`)).data
               let wipi = wipu[Math.floor(Math.random() * (wipu.length))]
               fs.writeFileSync(`./${sender}.jpeg`, await getBuffer(wipi))
-		      buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `➡️Next`},type:1},{buttonId:`${prefix}nhentaibot`,buttonText:{displayText:'NHENTAI BOT'},type:1}]
+              buttons = [{buttonId: `${prefix + command}`,buttonText:{displayText: `⏩ Next`},type:1}]
               imageMsg = ( await dha.prepareMessage(from, fs.readFileSync(`./${sender}.jpeg`), 'imageMessage', {thumbnail: Buffer.alloc(0)})).message.imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi ya', imageMessage: imageMsg,
-              contentText:`klik Next untuk ke gambar selanjut nya`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Continue to the next image`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
               fs.unlinkSync(`./${sender}.jpeg`)
@@ -2494,8 +2532,8 @@ Source : ${anu.result.source}
               if (!q) return reply('Linknya?')
               buttons = [{buttonId: `${prefix}play2 ${q}`,buttonText:{displayText: `🎥 Video`},type:1},{buttonId:`${prefix}playy ${q}`,buttonText:{displayText:'🎵 Mp3'},type:1}]
               imageMsg = (await dha.prepareMessageMedia(fs.readFileSync(`./media/ganteng.jpg`), 'imageMessage', {thumbnail: fs.readFileSync(`./media/ganteng.jpg`)})).imageMessage
-              buttonsMessage = {footerText:'Jangan lupa donasi ya', imageMessage: imageMsg,
-              contentText:`Pilih media yang akan di download`,buttons,headerType:4}
+              buttonsMessage = {footerText:`Hari: ${week}, ${weton}, ${jam}\nTanggal: ${date}`, imageMessage: imageMsg,
+              contentText:`Select media to download`,buttons,headerType:4}
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{quoted: mek})
               dha.relayWAMessage(prep)
               break
@@ -2603,7 +2641,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               break
        case 'amv':           
               reply(mess.wait)
-              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccbot/master/src/amv.txt')
+              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/amv.txt')
               .then(async (body) => {
               amv = body.split('\n')
               amv = amv[Math.floor(Math.random() * amv.length)]
@@ -2616,7 +2654,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               break
        case 'randomvn':
               reply(mess.wait)
-              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccbot/master/src/randomvn.txt')
+              amv = await fetchText('https://raw.githubusercontent.com/arfyudika/rccstore/master/src/randomvn.txt')
               .then(async (body) => {
               amv = body.split('\n')
               amv = amv[Math.floor(Math.random() * amv.length)]
@@ -2628,7 +2666,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
               break
        case 'araara':
-       		ara = fs.readFileSync('./src/araara.mp3')
+        	   ara = fs.readFileSync('./src/araara.mp3')
 			   dha.sendMessage(from, ara, MessageType.audio, {quoted: mek, mimetype: 'audio/mp4', ptt:true} )
 			break
        case 'ribut':
@@ -2663,18 +2701,10 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
          case 'asupan':
-               get_result = await getBuffer(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
-               kodo = `Random Asupan︎`
-               sendMediaURL(from, kodo, `Next Untuk Melanjutkan`, get_result, [                      
-          {
-            buttonId: `${prefix+command}`,
-            buttonText: {
-              displayText: `⏩ Next︎`,
-            },
-            type: 1,
-          },
-        ]);
-              break         
+                 get_result = await fetchJson(`https://api.lolhuman.xyz/api/asupan?apikey=${setting.lolkey}`)
+                 ini_buffer = await getBuffer(get_result.result)
+                 await dha.sendMessage(from, ini_buffer, video, { quoted: mek, mimetype: Mimetype.mp4, filename: "asupan.mp4" })
+                 break
         case 'nulis':
         case 'tulis':
                if (args.length < 1) return reply('Yang mau di tulis apaan?')
@@ -2689,7 +2719,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
 })
                break
 //------------------< Level >-------------------
-      case 'level': 
+      case 'level': case 'lvl':
               if (!isGroup) return reply(mess.only.group)
               if (!isLevelingOn) return await reply('Fitur leveling belum diaktifkan!')
               let userLevel = level.getLevelingLevel(sender, _level)
@@ -2706,7 +2736,7 @@ teks = `\`\`\`▢ Title : ${get_result[i].title}\`\`\`
               dha.sendMessage(from, buffer, image, { caption: teks, quoted: mek})
               break
        case 'leaderboard': //Cek Leaderboard
-       case 'leaderboards':
+       case 'leaderboards': case 'lb':
               if (!isGroup) return reply(mess.only.group)
               if (!isLevelingOn) return await reply('Fitur leveling belum diaktifkan!') 
               const resp = _level
@@ -3230,7 +3260,7 @@ fetchJson(`https://api.zeks.xyz/api/spamcall?apikey=chika-key&no=${args[1]}`)
 }
 break   
 //------------------<18+ Menu>-----------------------   
-       case 'randombokep':
+       case 'randombokep': case 'bkp':
     fetchJson(`https://pastebin.com/raw/k82VJzeP`).then((data) => {
     var bokepp = JSON.parse(JSON.stringify(data))
     var bokep2 =  bokepp[Math.floor(Math.random() * bokepp.length)]
@@ -3260,7 +3290,7 @@ break
                     dha.sendMessage(from, thumbnail, image, { quoted: mek, caption: ini_txt })
                     reply(ini_txt)
                     break
-        case 'xnxxsearch':
+        case 'xnxxsearch': case 'xnsearch':
                     if (args.length == 0) return reply(`Example: ${prefix + command} Japanese`)
                     query = args.join(" ")
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/xnxxsearch?apikey=rccstore&query=${query}`)
@@ -3276,7 +3306,7 @@ break
                     }
                     reply(ini_txt)
                     break 
-        case 'xhamstersearch':
+        case 'xhamstersearch': case 'xhsearch':
                     if (args.length == 0) return reply(`Example: ${prefix + command} Japanese`)
                     query = args.join(" ")
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/xhamstersearch?apikey=rccstore&query=${query}`)
@@ -3292,7 +3322,7 @@ break
                     }
                     reply(ini_txt)
                     break
-        case 'pornhubsearch':
+        case 'pornhubsearch': case 'phsearch':
                     if (args.length == 0) return reply(`Example: ${prefix + command} Japanese`)
                     query = args.join(" ")
                     get_result = await fetchJson(`https://api.lolhuman.xyz/api/pornhubsearch?apikey=rccstore&query=${query}`)
@@ -4182,105 +4212,41 @@ break
               dha.sendMessage(from, '*Pertanyaan :* '+kapankah+'\n*Jawaban :* '+ koh, text, { quoted: mek })
               break
           case 'bucin':
-                    get_result = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`)
-                    reply(get_result.result)
-                    break
+	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/bucin?apikey=${setting.lolkey}`, {method: 'get'})
+				kata = anu.result
+              buttons = [{buttonId: `${prefix}bucin`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}funmenu`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
+              dha.relayWAMessage(prep)
+		   	break
           case 'randomnama':
-                    anu = await fetchJson(`https://api.lolhuman.xyz/api/random/nama?apikey=${setting.lolkey}`)
-                    reply(anu.result)
-                    break
-          case 'dare':
-				const dare =['Kirim pesan ke mantan kamu dan bilang "aku masih suka sama kamu','telfon crush/pacar sekarang dan ss ke pemain','pap ke salah satu anggota grup','Bilang "KAMU CANTIK BANGET NGGAK BOHONG" ke cowo','ss recent call whatsapp','drop emot "🦄💨" setiap ngetik di gc/pc selama 1 hari','kirim voice note bilang can i call u baby?','drop kutipan lagu/quote, terus tag member yang cocok buat kutipan itu','pake foto sule sampe 3 hari','ketik pake bahasa daerah 24 jam','ganti nama menjadi "gue anak lucinta luna" selama 5 jam','chat ke kontak wa urutan sesuai %batre kamu, terus bilang ke dia "i lucky to hv you','prank chat mantan dan bilang " i love u, pgn balikan','record voice baca surah al-kautsar','bilang "i hv crush on you, mau jadi pacarku gak?" ke lawan jenis yang terakhir bgt kamu chat (serah di wa/tele), tunggu dia bales, kalo udah ss drop ke sini','sebutkan tipe pacar mu!','snap/post foto pacar/crush','teriak gajelas lalu kirim pake vn kesini','pap mukamu lalu kirim ke salah satu temanmu','kirim fotomu dengan caption, aku anak pungut','teriak pake kata kasar sambil vn trus kirim kesini','teriak " anjimm gabutt anjimmm " di depan rumah mu','ganti nama jadi " BOWO " selama 24 jam','Pura pura kerasukan, contoh : kerasukan maung, kerasukan belalang, kerasukan kulkas, dll']
-		        const der = dare[Math.floor(Math.random() * dare.length)]
-				buffer = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
-				sendButMessage(from, buffer, image, `${der}`, `${ucapanWaktu}`, [
-									{
-										buttonId: `${prefix}dare`,
-										buttonText: {
-											displayText: `⏩ NEXT️`,
-											},
-											type: 1,
-											}]);
-									break
-						case 'truth':
-									const trut = ['Pernah suka sama siapa aja? berapa lama?','Kalau boleh atau kalau mau, di gc/luar gc siapa yang akan kamu jadikan sahabat?(boleh beda/sma jenis)','apa ketakutan terbesar kamu?','pernah suka sama orang dan merasa orang itu suka sama kamu juga?','Siapa nama mantan pacar teman mu yang pernah kamu sukai diam diam?','pernah gak nyuri uang nyokap atau bokap? Alesanya?','hal yang bikin seneng pas lu lagi sedih apa','pernah cinta bertepuk sebelah tangan? kalo pernah sama siapa? rasanya gimana brou?','pernah jadi selingkuhan orang?','hal yang paling ditakutin','siapa orang yang paling berpengaruh kepada kehidupanmu','hal membanggakan apa yang kamu dapatkan di tahun ini','siapa orang yang bisa membuatmu sange','siapa orang yang pernah buatmu sange','(bgi yg muslim) pernah ga solat seharian?','Siapa yang paling mendekati tipe pasangan idealmu di sini','suka mabar(main bareng)sama siapa?','pernah nolak orang? alasannya kenapa?','Sebutkan kejadian yang bikin kamu sakit hati yang masih di inget','pencapaian yang udah didapet apa aja ditahun ini?','kebiasaan terburuk lo pas di sekolah apa?']
-									const ttrth = trut[Math.floor(Math.random() * trut.length)]
-									truteh = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
-									sendButMessage(from, truteh, image, `${ttrth}`, `${ucapanWaktu}`, [
-									{
-										buttonId: `${prefix}truth`,
-										buttonText: {
-											displayText: `⏩ NEXT`,
-											},
-											type: 1,
-											}]);
-									break
-						case 'slot':
-									const sotoy = ['🍊 : 🍒 : 🍐','🍒 : 🍐 : 🍊','🍐 : 🍒 : 🍐','🍊 : 🍋 : 🔔','🔔 : 🍒 : 🍐','🔔 : 🍒 : 🍊','🍊 : 🍋 : 🔔','🍐 : 🍒 : 🍋','🍐 : 🍐 : 🍐','🍊 : 🍒 : 🍒','🔔 : 🔔 : 🍇 ','🍌 : 🍒 : 🔔','🍐 : 🔔 :  🔔','🍊 : 🍋 :  🍒','🍋 : 🍋 :  🍌','🔔 : 🔔 : 🍇','🔔 : 🍐 :  🍇','🔔 : 🔔 :  🔔','🍒 : 🍒 :  🍒','🍌 : 🍌 : 🍌','🍇 : ?? : 🍇']
-									somtoy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
-									somtoyy = sotoy[Math.floor(Math.random() * (sotoy.length))]
-									somtoyyy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
-									rn = randomNomor(100)
-									if (somtoyy== '🍌 : 🍌 : 🍌') {
-										bp = await sendButMessage(from, `─「 🎰 *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
-									{
-										buttonId: `${prefix}slot`,
-										buttonText: {
-											displayText: `⏩ NEXT️`,
-											},
-											type: 1,
-											}]);
-										} else if (somtoyy == '🍒 : 🍒 : 🍒') {
-									bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
-									{
-										buttonId: `${prefix}slot`,
-										buttonText: {
-											displayText: `⏩ NEXT️`,
-											},
-											type: 1,
-											}]);
-										} else if (somtoyy == '🔔 : 🔔 : 🔔') {
-											bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
-											{
-												buttonId: `${prefix}slot`,
-												buttonText: {
-													displayText: `⏩ NEXT️`,
-											},
-											type: 1,
-											}]);
-												} else if (somtoyy == '🍐 : 🍐 : 🍐') {
-													bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
-											{
-												buttonId: `${prefix}slot`,
-												buttonText: {
-													displayText: `⏩ NEXT`,
-											},
-											type: 1,
-											}]);
-														} else if (somtoyy == '🍇 : 🍇 : 🍇') {
-															bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
-											{
-												buttonId: `${prefix}slot`,
-												buttonText: {
-													displayText: `⏩ NEXT`,
-											},
-											type: 1,
-											}]);
-																} else {
-																	ok = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲  *YOU LOSE*  ❳──`, `Main Lagi? Klik Di Bawah `, [
-											{
-												buttonId: `${prefix}slot`,
-												buttonText: {
-													displayText: `⏩ NEXT️`,
-											},
-											type: 1,
-											}]);
-											}
-                                     	break
+              anu = await fetchJson(`https://api.lolhuman.xyz/api/random/nama?apikey=${setting.lolkey}`, {method: 'get'})
+		      kata = anu.result
+              buttons = [{buttonId: `${prefix}randomnama`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}funmenu`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
+              dha.relayWAMessage(prep)
+              break
        case 'pantun':
-             get_result = await fetchJson(`https://api.lolhuman.xyz/api/random/pantun?apikey=${setting.lolkey}`)
-             reply(get_result.result)
-             break
+	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/pantun?apikey=${setting.lolkey}`, {method: 'get'})
+				kata = anu.result
+              buttons = [{buttonId: `${prefix}pantun`,buttonText:{displayText: '️⏩ Next'},type:1},{buttonId: `${prefix}funmenu`,buttonText:{displayText: 'Back Menu'},type:1}]
+              buttonsMessage = { contentText: `${kata}`, footerText: `Created By ${nmbot}`, buttons: buttons, headerType: 1 }
+              prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
+              dha.relayWAMessage(prep)
+			break
+       case 'truth':
+              const trut =['Pernah suka sama siapa aja? berapa lama?','Kalau boleh atau kalau mau, di gc/luar gc siapa yang akan kamu jadikan sahabat?(boleh beda/sma jenis)','apa ketakutan terbesar kamu?','pernah suka sama orang dan merasa orang itu suka sama kamu juga?','Siapa nama mantan pacar teman mu yang pernah kamu sukai diam diam?','pernah gak nyuri uang nyokap atau bokap? Alesanya?','hal yang bikin seneng pas lu lagi sedih apa','pernah cinta bertepuk sebelah tangan? kalo pernah sama siapa? rasanya gimana brou?','pernah jadi selingkuhan orang?','hal yang paling ditakutin','siapa orang yang paling berpengaruh kepada kehidupanmu','hal membanggakan apa yang kamu dapatkan di tahun ini','siapa orang yang bisa membuatmu sange','siapa orang yang pernah buatmu sange','(bgi yg muslim) pernah ga solat seharian?','Siapa yang paling mendekati tipe pasangan idealmu di sini','suka mabar(main bareng)sama siapa?','pernah nolak orang? alasannya kenapa?','Sebutkan kejadian yang bikin kamu sakit hati yang masih di inget','pencapaian yang udah didapet apa aja ditahun ini?','kebiasaan terburuk lo pas di sekolah apa?']
+              const ttrth = trut[Math.floor(Math.random() * trut.length)]
+              truteh = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
+              dha.sendMessage(from, truteh, image, { caption: '*Truth*\n\n'+ ttrth, quoted: mek })
+              break
+       case 'dare':
+              const dare =['Kirim pesan ke mantan kamu dan bilang "aku masih suka sama kamu','telfon crush/pacar sekarang dan ss ke pemain','pap ke salah satu anggota grup','Bilang "KAMU CANTIK BANGET NGGAK BOHONG" ke cowo','ss recent call whatsapp','drop emot "??💨" setiap ngetik di gc/pc selama 1 hari','kirim voice note bilang can i call u baby?','drop kutipan lagu/quote, terus tag member yang cocok buat kutipan itu','pake foto sule sampe 3 hari','ketik pake bahasa daerah 24 jam','ganti nama menjadi "gue anak lucinta luna" selama 5 jam','chat ke kontak wa urutan sesuai %batre kamu, terus bilang ke dia "i lucky to hv you','prank chat mantan dan bilang " i love u, pgn balikan','record voice baca surah al-kautsar','bilang "i hv crush on you, mau jadi pacarku gak?" ke lawan jenis yang terakhir bgt kamu chat (serah di wa/tele), tunggu dia bales, kalo udah ss drop ke sini','sebutkan tipe pacar mu!','snap/post foto pacar/crush','teriak gajelas lalu kirim pake vn kesini','pap mukamu lalu kirim ke salah satu temanmu','kirim fotomu dengan caption, aku anak pungut','teriak pake kata kasar sambil vn trus kirim kesini','teriak " anjimm gabutt anjimmm " di depan rumah mu','ganti nama jadi " BOWO " selama 24 jam','Pura pura kerasukan, contoh : kerasukan maung, kerasukan belalang, kerasukan kulkas, dll']
+              const der = dare[Math.floor(Math.random() * dare.length)]
+              buffer = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
+              dha.sendMessage(from, buffer, image, { quoted: mek, caption: '*Dare*\n\n'+ der })
+              break
        case 'jadian':
               jds = []
               jdii = groupMembers
@@ -4341,21 +4307,36 @@ break
           teks += `│+ Total : ${banned.length}\n╰──────「 *RCC BOT* 」────`
           dha.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": [sender] } })
           break
- 		case 'ban': case 'banned': case 'block':
-                    if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
-                    bnnd = `${args[0].replace('@', '')}@s.whatsapp.net`
-					banned.push(bnnd)
-					fs.writeFileSync('./src/banned.json', JSON.stringify(banned))
-					reply(`Nomor ${bnnd} telah dibanned!`)
-          break
-        case 'unban': case 'unbannned': case 'unblock':
-                    if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
-                    ya = `${args[0].replace('@', '')}@s.whatsapp.net`
-					unb = banned.indexOf(ya)
-					ban.splice(unb, 1)
-					fs.writeFileSync('./src/banned.json', JSON.stringify(banned))
-					reply(`Nomor wa.me/${ya} telah di unban!`)
-          break
+						case 'ban':
+									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
+									if (dha.message.extendedTextMessage === undefined || dha.message.extendedTextMessage === null) {
+										ny = `${args[0].replace('@', '')}@s.whatsapp.net`
+										ban.push(ny)
+										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+										reply(`Nomor ${ny} telah dibanned!`)
+										} else {
+											ny = `${mentionUser}`
+											ban.push(ny)
+											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+											reply(`Nomor ${ny} telah dibanned!`)
+										}
+									break
+						case 'unban':
+									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
+									if (dha.message.extendedTextMessage === undefined || dha.message.extendedTextMessage === null) {
+										ah = `${args[0].replace("@","")}@s.whatsapp.net`
+										unb = ban.indexOf(ah)
+										ban.splice(unb, 1)
+										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+										reply(`Nomor ${ah} telah di unban!`)
+										} else {
+											ah = `${mentionUser}`
+											unb = ban.indexOf(ah)
+											ban.splice(unb, 1)
+											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+											reply(`Nomor ${ah} telah di unban!`)
+										}
+									break
         case 'getpp':
                if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
                linkpp = await dha.getProfilePicture(from) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
