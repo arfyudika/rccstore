@@ -1367,6 +1367,25 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yang Ada Di Grup!`, text, {cont
 }
               gameAdd(sender, glimit)
               break
+       case 'slot':
+              const sotoy = ['🍊 : 🍒 : 🍐','🍒 : ?? : 🍊','?? : 🍒 : 🍐','🍊 : 🍋 : 🔔','🔔 : 🍒 : 🍐','🔔 : 🍒 : 🍊','🍊 : 🍋 : 🔔','🍐 : 🍒 : 🍋','🍐 : 🍐 : 🍐','🍊 : 🍒 : 🍒','🔔 : 🔔 : 🍇','🍌 : 🍒 : 🔔','🍐 : 🔔 : 🔔','🍊 : 🍋 : 🍒','🍋 : 🍋 : 🍌','🔔 : 🔔 : 🍇','🔔 : 🍐 : 🍇','🔔 : 🔔 : 🔔','🍒 : 🍒 : 🍒','🍌 : 🍌 : 🍌','🍇 : ?? : 🍇']
+              somtoy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
+              somtoyy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
+              somtoyyy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
+              if (somtoyy  == '🍌 : 🍌 : 🍌') {
+              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
+              } else if (somtoyy == '?? : 🍒 : 🍒') {
+              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
+              } else if (somtoyy == '🔔 : 🔔 : 🔔') {
+              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
+              } else if (somtoyy == '?? : 🍐 : 🍐') {
+              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
+              } else if (somtoyy == '🍇 : 🍇 : 🍇') {
+              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
+              } else {
+              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU LOSE*  ]`)
+}
+              break
        case 'suit': //nyolong dari zenz
               if (!q) return reply(`Kirim perintah ${prefix}suit gunting / batu / kertas`)
               const userspilih = q
