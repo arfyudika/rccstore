@@ -4326,34 +4326,21 @@ break
           teks += `│+ Total : ${banned.length}\n╰──────「 *RCC BOT* 」────`
           dha.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": [sender] } })
           break
-						case 'ban':
-									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
-										ny = `${args[0].replace('@', '')}@s.whatsapp.net`
-										ban.push(ny)
-										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-										reply(`Nomor ${ny} telah dibanned!`)
-										} else {
-											ny = `${mentionUser}`
-											ban.push(ny)
-											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-											reply(`Nomor ${ny} telah dibanned!`)
-											}
-									break
-						case 'unban':
-									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
-										ah = `${args[0].replace("@","")}@s.whatsapp.net`
-										unb = ban.indexOf(ah)
-										ban.splice(unb, 1)
-										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-										reply(`Nomor ${ah} telah di unban!`)
-										} else {
-											ah = `${mentionUser}`
-											unb = ban.indexOf(ah)
-											ban.splice(unb, 1)
-											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
-											reply(`Nomor ${ah} telah di unban!`)
-										}
-									break
+ 		case 'ban': case 'banned': case 'block':
+                    if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
+                    bnnd = `${args[0].replace('@', '')}@s.whatsapp.net`
+					ban.push(bnnd)
+					fs.writeFileSync('./database/banned.json', JSON.stringify(banned))
+					reply(`Nomor ${bnnd} telah dibanned!`)
+          break
+        case 'unban': case 'unbannned': case 'unblock':
+                    if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
+                    ya = `${args[0].replace('@', '')}@s.whatsapp.net`
+					unb = ban.indexOf(ya)
+					ban.splice(unb, 1)
+					fs.writeFileSync('./database/banned.json', JSON.stringify(banned))
+					reply(`Nomor wa.me/${ya} telah di unban!`)
+          break
         case 'getpp':
                if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
                linkpp = await dha.getProfilePicture(from) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
