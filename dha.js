@@ -216,7 +216,7 @@ module.exports = dha = async (dha, mek) => {
 		const isCmd = body.startsWith(prefix) 
 		if (isCmd) cmdadd()
 		const totalhit = JSON.parse(fs.readFileSync('./database/totalcmd.json'))[0].totalcmd
-		const banned = JSON.parse(fs.readFileSync('./src/banned.json'))
+        const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
         const q = args.join(' ')
         const botNumber = dha.user.jid
         const ownerNumber = setting.ownerNumber
@@ -559,6 +559,8 @@ module.exports = dha = async (dha, mek) => {
 		const isQuotedVideo = type === 'extendedTextMessage' && content.includes('videoMessage')
 		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
 		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
+		const fakefoto = { key: {fromMe: false, participant: `${numbernye}@s.whatsapp.net`, ...(from ? {remoteJid: "status@broadcast"}: {})}, message: {imageMessage: {caption: `${ucapannya}`, jpegThumbnail: thumbnail}}}
+	    const fakevideo = { key: {fromMe: false, participant: `${numbernye}@s.whatsapp.net`, ...(from ? {remoteJid: "status@broadcast"}: {})}, message: {videoMessage: {caption: `${ucapannya}`, jpegThumbnail: thumbnail}}}
         const troli =  {key: { fromMe: false,remoteJid: "status@broadcast", participant: '0@s.whatsapp.net'}, message: {orderMessage: {itemCount: 300, status: 200, thumbnail: fakeimage, surface: 200, message: fake, orderTitle: 'dha', sellerJid: '0@s.whatsapp.net'} } }
         const ftext = {key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})},message: { "extendedTextMessage": {"text": `*Hai ${pushname}👋*\n  ${moment().utcOffset('+0700').format('HH:mm:ss')} ${moment.tz('Asia/Jakarta').format('DD/MM/YYYY')}`,"title": `Hmm`,'jpegThumbnail': fs.readFileSync('./media/ganteng.jpg')}}}
         const ftoko = {key: {fromMe: false,participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})},message: {"productMessage": {"product": {"productImage":{"mimetype": "image/jpeg","jpegThumbnail": fs.readFileSync('./media/ganteng.jpg')},"title": `HALLO..${pushname}`,"description": "ARFYUDIKA", "currencyCode": "IDR","priceAmount1000": "0","retailerId": "RCC STORE","productImageCount": 1},"businessOwnerJid": `0@s.whatsapp.net`}}}
@@ -1366,25 +1368,6 @@ Ket : Ketik /resetgame , Untuk Mereset Permainan Yang Ada Di Grup!`, text, {cont
               fs.writeFileSync("./database/caklontong.json", JSON.stringify(caklontong))
 }
               gameAdd(sender, glimit)
-              break
-       case 'slot':
-              const sotoy = ['🍊 : 🍒 : 🍐','🍒 : ?? : 🍊','?? : 🍒 : 🍐','🍊 : 🍋 : 🔔','🔔 : 🍒 : 🍐','🔔 : 🍒 : 🍊','🍊 : 🍋 : 🔔','🍐 : 🍒 : 🍋','🍐 : 🍐 : 🍐','🍊 : 🍒 : 🍒','🔔 : 🔔 : 🍇','🍌 : 🍒 : 🔔','🍐 : 🔔 : 🔔','🍊 : 🍋 : 🍒','🍋 : 🍋 : 🍌','🔔 : 🔔 : 🍇','🔔 : 🍐 : 🍇','🔔 : 🔔 : 🔔','🍒 : 🍒 : 🍒','🍌 : 🍌 : 🍌','🍇 : ?? : 🍇']
-              somtoy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
-              somtoyy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
-              somtoyyy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
-              if (somtoyy  == '🍌 : 🍌 : 🍌') {
-              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
-              } else if (somtoyy == '?? : 🍒 : 🍒') {
-              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
-              } else if (somtoyy == '🔔 : 🔔 : 🔔') {
-              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
-              } else if (somtoyy == '?? : 🍐 : 🍐') {
-              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
-              } else if (somtoyy == '🍇 : 🍇 : 🍇') {
-              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU WIN*  ]`)
-              } else {
-              reply(`[  🎰 | *SLOT* ]\n---------------------\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n---------------------\n[  *YOU LOSE*  ]`)
-}
               break
        case 'suit': //nyolong dari zenz
               if (!q) return reply(`Kirim perintah ${prefix}suit gunting / batu / kertas`)
@@ -4246,12 +4229,6 @@ break
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
               dha.relayWAMessage(prep)
               break
-       case 'truth':
-              const trut =['Pernah suka sama siapa aja? berapa lama?','Kalau boleh atau kalau mau, di gc/luar gc siapa yang akan kamu jadikan sahabat?(boleh beda/sma jenis)','apa ketakutan terbesar kamu?','pernah suka sama orang dan merasa orang itu suka sama kamu juga?','Siapa nama mantan pacar teman mu yang pernah kamu sukai diam diam?','pernah gak nyuri uang nyokap atau bokap? Alesanya?','hal yang bikin seneng pas lu lagi sedih apa','pernah cinta bertepuk sebelah tangan? kalo pernah sama siapa? rasanya gimana brou?','pernah jadi selingkuhan orang?','hal yang paling ditakutin','siapa orang yang paling berpengaruh kepada kehidupanmu','hal membanggakan apa yang kamu dapatkan di tahun ini','siapa orang yang bisa membuatmu sange','siapa orang yang pernah buatmu sange','(bgi yg muslim) pernah ga solat seharian?','Siapa yang paling mendekati tipe pasangan idealmu di sini','suka mabar(main bareng)sama siapa?','pernah nolak orang? alasannya kenapa?','Sebutkan kejadian yang bikin kamu sakit hati yang masih di inget','pencapaian yang udah didapet apa aja ditahun ini?','kebiasaan terburuk lo pas di sekolah apa?']
-              const ttrth = trut[Math.floor(Math.random() * trut.length)]
-              truteh = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
-              dha.sendMessage(from, truteh, image, { caption: '*Truth*\n\n'+ ttrth, quoted: mek })
-              break
        case 'pantun':
 	        	anu = await fetchJson(`https://api.lolhuman.xyz/api/random/pantun?apikey=${setting.lolkey}`, {method: 'get'})
 				kata = anu.result
@@ -4260,12 +4237,93 @@ break
               prep = await dha.prepareMessageFromContent(from,{buttonsMessage},{contextInfo: { mentionedJid: [sender]},quoted:mek})
               dha.relayWAMessage(prep)
 			break
-       case 'dare':
-              const dare =['Kirim pesan ke mantan kamu dan bilang "aku masih suka sama kamu','telfon crush/pacar sekarang dan ss ke pemain','pap ke salah satu anggota grup','Bilang "KAMU CANTIK BANGET NGGAK BOHONG" ke cowo','ss recent call whatsapp','drop emot "??💨" setiap ngetik di gc/pc selama 1 hari','kirim voice note bilang can i call u baby?','drop kutipan lagu/quote, terus tag member yang cocok buat kutipan itu','pake foto sule sampe 3 hari','ketik pake bahasa daerah 24 jam','ganti nama menjadi "gue anak lucinta luna" selama 5 jam','chat ke kontak wa urutan sesuai %batre kamu, terus bilang ke dia "i lucky to hv you','prank chat mantan dan bilang " i love u, pgn balikan','record voice baca surah al-kautsar','bilang "i hv crush on you, mau jadi pacarku gak?" ke lawan jenis yang terakhir bgt kamu chat (serah di wa/tele), tunggu dia bales, kalo udah ss drop ke sini','sebutkan tipe pacar mu!','snap/post foto pacar/crush','teriak gajelas lalu kirim pake vn kesini','pap mukamu lalu kirim ke salah satu temanmu','kirim fotomu dengan caption, aku anak pungut','teriak pake kata kasar sambil vn trus kirim kesini','teriak " anjimm gabutt anjimmm " di depan rumah mu','ganti nama jadi " BOWO " selama 24 jam','Pura pura kerasukan, contoh : kerasukan maung, kerasukan belalang, kerasukan kulkas, dll']
-              const der = dare[Math.floor(Math.random() * dare.length)]
-              buffer = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
-              dha.sendMessage(from, buffer, image, { quoted: mek, caption: '*Dare*\n\n'+ der })
-              break		
+						case 'dare':
+									const dare =['Kirim pesan ke mantan kamu dan bilang "aku masih suka sama kamu','telfon crush/pacar sekarang dan ss ke pemain','pap ke salah satu anggota grup','Bilang "KAMU CANTIK BANGET NGGAK BOHONG" ke cowo','ss recent call whatsapp','drop emot "🦄💨" setiap ngetik di gc/pc selama 1 hari','kirim voice note bilang can i call u baby?','drop kutipan lagu/quote, terus tag member yang cocok buat kutipan itu','pake foto sule sampe 3 hari','ketik pake bahasa daerah 24 jam','ganti nama menjadi "gue anak lucinta luna" selama 5 jam','chat ke kontak wa urutan sesuai %batre kamu, terus bilang ke dia "i lucky to hv you','prank chat mantan dan bilang " i love u, pgn balikan','record voice baca surah al-kautsar','bilang "i hv crush on you, mau jadi pacarku gak?" ke lawan jenis yang terakhir bgt kamu chat (serah di wa/tele), tunggu dia bales, kalo udah ss drop ke sini','sebutkan tipe pacar mu!','snap/post foto pacar/crush','teriak gajelas lalu kirim pake vn kesini','pap mukamu lalu kirim ke salah satu temanmu','kirim fotomu dengan caption, aku anak pungut','teriak pake kata kasar sambil vn trus kirim kesini','teriak " anjimm gabutt anjimmm " di depan rumah mu','ganti nama jadi " BOWO " selama 24 jam','Pura pura kerasukan, contoh : kerasukan maung, kerasukan belalang, kerasukan kulkas, dll']
+									const der = dare[Math.floor(Math.random() * dare.length)]
+									buffer = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
+									sendButMessage(from, buffer, image, `${der}`, `${ucapannya}`, [
+									{
+										buttonId: `${prefix}dare`,
+										buttonText: {
+											displayText: `⏩ NEXT️`,
+											},
+											type: 1,
+											}]);
+									break
+						case 'truth':
+									const trut = ['Pernah suka sama siapa aja? berapa lama?','Kalau boleh atau kalau mau, di gc/luar gc siapa yang akan kamu jadikan sahabat?(boleh beda/sma jenis)','apa ketakutan terbesar kamu?','pernah suka sama orang dan merasa orang itu suka sama kamu juga?','Siapa nama mantan pacar teman mu yang pernah kamu sukai diam diam?','pernah gak nyuri uang nyokap atau bokap? Alesanya?','hal yang bikin seneng pas lu lagi sedih apa','pernah cinta bertepuk sebelah tangan? kalo pernah sama siapa? rasanya gimana brou?','pernah jadi selingkuhan orang?','hal yang paling ditakutin','siapa orang yang paling berpengaruh kepada kehidupanmu','hal membanggakan apa yang kamu dapatkan di tahun ini','siapa orang yang bisa membuatmu sange','siapa orang yang pernah buatmu sange','(bgi yg muslim) pernah ga solat seharian?','Siapa yang paling mendekati tipe pasangan idealmu di sini','suka mabar(main bareng)sama siapa?','pernah nolak orang? alasannya kenapa?','Sebutkan kejadian yang bikin kamu sakit hati yang masih di inget','pencapaian yang udah didapet apa aja ditahun ini?','kebiasaan terburuk lo pas di sekolah apa?']
+									const ttrth = trut[Math.floor(Math.random() * trut.length)]
+									truteh = await getBuffer(`https://i.ibb.co/305yt26/bf84f20635dedd5dde31e7e5b6983ae9.jpg`)
+									sendButMessage(from, truteh, image, `${ttrth}`, `${ucapannya}`, [
+									{
+										buttonId: `${prefix}truth`,
+										buttonText: {
+											displayText: `⏩ NEXT`,
+											},
+											type: 1,
+											}]);
+									break
+						case 'slot':
+									const sotoy = ['🍊 : 🍒 : 🍐','🍒 : 🍐 : 🍊','🍐 : 🍒 : 🍐','🍊 : 🍋 : 🔔','🔔 : 🍒 : 🍐','🔔 : 🍒 : 🍊','🍊 : 🍋 : 🔔','🍐 : 🍒 : 🍋','🍐 : 🍐 : 🍐','🍊 : 🍒 : 🍒','🔔 : 🔔 : 🍇 ','🍌 : 🍒 : 🔔','🍐 : 🔔 :  🔔','🍊 : 🍋 :  🍒','🍋 : 🍋 :  🍌','🔔 : 🔔 : 🍇','🔔 : 🍐 :  🍇','🔔 : 🔔 :  🔔','🍒 : 🍒 :  🍒','🍌 : 🍌 : 🍌','🍇 : ?? : 🍇']
+									somtoy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
+									somtoyy = sotoy[Math.floor(Math.random() * (sotoy.length))]
+									somtoyyy = sotoy[Math.floor(Math.random() * (sotoy.length))]	
+									rn = randomNomor(100)
+									if (somtoyy== '🍌 : 🍌 : 🍌') {
+										bp = await sendButMessage(from, `─「 🎰 *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
+									{
+										buttonId: `${prefix}slot`,
+										buttonText: {
+											displayText: `⏩ NEXT️`,
+											},
+											type: 1,
+											}]);
+										} else if (somtoyy == '🍒 : 🍒 : 🍒') {
+									bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
+									{
+										buttonId: `${prefix}slot`,
+										buttonText: {
+											displayText: `⏩ NEXT️`,
+											},
+											type: 1,
+											}]);
+										} else if (somtoyy == '🔔 : 🔔 : 🔔') {
+											bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
+											{
+												buttonId: `${prefix}slot`,
+												buttonText: {
+													displayText: `⏩ NEXT️`,
+											},
+											type: 1,
+											}]);
+												} else if (somtoyy == '🍐 : 🍐 : 🍐') {
+													bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
+											{
+												buttonId: `${prefix}slot`,
+												buttonText: {
+													displayText: `⏩ NEXT`,
+											},
+											type: 1,
+											}]);
+														} else if (somtoyy == '🍇 : 🍇 : 🍇') {
+															bp = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲ 👑 *YOU WIN* 👑 ❳──`, `Main Lagi? Klik Di Bawah `, [
+											{
+												buttonId: `${prefix}slot`,
+												buttonText: {
+													displayText: `⏩ NEXT`,
+											},
+											type: 1,
+											}]);
+																} else {
+																	ok = await sendButMessage(from, `─「 🎰  *SLOT*  🎰 」─\n\n${somtoy}\n${somtoyy} <======\n${somtoyyy}\n\n──❲  *YOU LOSE*  ❳──`, `Main Lagi? Klik Di Bawah `, [
+											{
+												buttonId: `${prefix}slot`,
+												buttonText: {
+													displayText: `⏩ NEXT️`,
+											},
+											type: 1,
+											}]);
+											break
        case 'jadian':
               jds = []
               jdii = groupMembers
@@ -4326,21 +4384,36 @@ break
           teks += `│+ Total : ${banned.length}\n╰──────「 *RCC BOT* 」────`
           dha.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": [sender] } })
           break
- 		case 'ban': case 'banned': case 'block':
-                    if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
-                    bnnd = `${args[0].replace('@', '')}@s.whatsapp.net`
-					banned.push(bnnd)
-					fs.writeFileSync('./src/banned.json', JSON.stringify(banned))
-					reply(`Nomor ${bnnd} telah dibanned!`)
-          break
-        case 'unban': case 'unbannned': case 'unblock':
-                    if (!mek.key.fromMe && !isOwner) return reply(mess.only.owner)
-                    ya = `${args[0].replace('@', '')}@s.whatsapp.net`
-					unb = banned.indexOf(ya)
-					ban.splice(unb, 1)
-					fs.writeFileSync('./src/banned.json', JSON.stringify(banned))
-					reply(`Nomor ${ya} telah di unban!`)
-          break
+						case 'ban':
+									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
+									if (dha.message.extendedTextMessage === undefined || dha.message.extendedTextMessage === null) {
+										ny = `${args[0].replace('@', '')}@s.whatsapp.net`
+										ban.push(ny)
+										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+										reply(`Nomor ${ny} telah dibanned!`)
+										} else {
+											ny = `${mentionUser}`
+											ban.push(ny)
+											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+											reply(`Nomor ${ny} telah dibanned!`)
+										}
+									break
+						case 'unban':
+									if (!isOwner && !mek.key.fromMe) return reply(mess.only.owner)
+									if (dha.message.extendedTextMessage === undefined || dha.message.extendedTextMessage === null) {
+										ah = `${args[0].replace("@","")}@s.whatsapp.net`
+										unb = ban.indexOf(ah)
+										ban.splice(unb, 1)
+										fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+										reply(`Nomor ${ah} telah di unban!`)
+										} else {
+											ah = `${mentionUser}`
+											unb = ban.indexOf(ah)
+											ban.splice(unb, 1)
+											fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+											reply(`Nomor ${ah} telah di unban!`)
+										}
+									break
         case 'getpp':
                if (mek.message.extendedTextMessage === null || mek.message.extendedTextMessage === undefined) {
                linkpp = await dha.getProfilePicture(from) || "https://telegra.ph/file/40151a65238ba2643152d.jpg"
